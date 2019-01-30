@@ -4,25 +4,29 @@
       <Menu active-name="1-2" theme="dark" width="auto" class="sider-menu" :class="menuitemClasses">
         <MenuItem name="1-1">
           <Icon type="ios-navigate"></Icon>
-          <span>操作一</span>
+          <span>基础理论</span>
         </MenuItem>
         <MenuItem name="1-2">
-          <Icon type="ios-search"></Icon>
-          <span>操作二</span>
+          <Icon type="ios-analytics-outline" />
+          <span>研究前沿</span>
         </MenuItem>
         <MenuItem name="1-3">
-          <Icon type="ios-settings"></Icon>
-          <span>操作三</span>
+          <Icon type="ios-search"></Icon>
+          <span>SKlearn</span>
         </MenuItem>
         <MenuItem name="1-4">
+          <Icon type="ios-settings"></Icon>
+          <span>Matlab</span>
+        </MenuItem>
+        <MenuItem name="1-5">
           <Icon type="ios-analytics-outline" />
-          <span>操作四</span>
+          <span>XGBOOST</span>
         </MenuItem>
       </Menu>
     </template>
     <template slot="content">
       <Card style="height: 500px">
-        <h2>我是主页</h2>
+        <h2>我是机器学习主页</h2>
       </Card>
     </template>
   </main-container>
@@ -33,7 +37,7 @@
       name: 'home',
       data() {
         return {
-          isCollapsed: true
+          isCollapsed: false
         }
       },
       computed: {
