@@ -7,13 +7,8 @@
 </template>
 
 <script>
-  import TopNav from './views/TopNav'
-  import BottomFooter from './views/BottomFooter'
   export default {
     components:{
-      BottomFooter,
-      'top-nav': TopNav,
-      'bottom-footer': BottomFooter
     }
   }
 </script>

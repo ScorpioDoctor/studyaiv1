@@ -2,12 +2,12 @@
   <div>
     <Header class="header">
       <Row :gutter="16">
-        <i-col span="3" offset="1">
+        <i-col span="3">
           <router-link to="/">
             <img src="../assets/logo.png" alt="人工智能社区" class="logo"/>
           </router-link>
         </i-col>
-        <i-col span="15">
+        <i-col span="17">
           <Menu mode="horizontal" :active-name="activeName">
             <MenuItem name="/jqxx" to="/jqxx">机器学习</MenuItem>
             <MenuItem name="/jqsj" to="/jqsj">机器视觉</MenuItem>
