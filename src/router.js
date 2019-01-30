@@ -14,9 +14,29 @@ export default new Router({
       component: Home
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/sign/Login.vue')
+    },
+    {
+      path: '/regist',
+      name: 'regist',
+      component: () => import('./views/sign/Regist.vue')
+    },
+    {
+      path: '/blog/create',
+      name: 'blogCreate',
+      component: () => import('./views/blogs/BlogCreate.vue')
+    },
+    {
       path: '/jqxx',
       name: 'jqxx',
       component: () => import('./views/jqxx/Jqxx.vue')
+    },
+    {
+      path: '/jqsj',
+      name: 'jqsj',
+      component: () => import('./views/jqsj/Jqsj.vue')
     }
   ]
 })

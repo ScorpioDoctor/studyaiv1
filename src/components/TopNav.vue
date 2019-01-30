@@ -1,13 +1,13 @@
 <template>
   <div>
     <Header class="header">
-      <Row :gutter="16">
-        <i-col span="3">
+      <Row :gutter="2">
+        <i-col :xs="2" :sm ="2">
           <router-link to="/">
             <img src="../assets/logo.png" alt="人工智能社区" class="logo"/>
           </router-link>
         </i-col>
-        <i-col span="17">
+        <i-col :xs="18" :sm ="18">
           <Menu mode="horizontal" :active-name="activeName">
             <MenuItem name="/jqxx" to="/jqxx">机器学习</MenuItem>
             <MenuItem name="/jqsj" to="/jqsj">机器视觉</MenuItem>
@@ -21,23 +21,31 @@
             <MenuItem name="/wlw" to="/wlw">物联网</MenuItem>
           </Menu>
         </i-col>
-        <i-col span="4">
+        <i-col :xs="4" :sm ="4">
           <Row>
-            <i-col span="8">
+            <i-col span="6">
               <Dropdown>
-                <Avatar src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></Avatar>
+                <Button type="success">创作</Button>
                 <DropdownMenu slot="list">
-                  <DropdownItem>我的主页</DropdownItem>
-                  <DropdownItem>我的收藏</DropdownItem>
-                  <DropdownItem>
-                    设置
-                    <Badge status="error" />
-                  </DropdownItem>
-                  <DropdownItem divided>退出登录</DropdownItem>
+                  <DropdownItem><router-link to="/blog/create">写博客</router-link></DropdownItem>
+                  <DropdownItem>提问题</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </i-col>
-            <i-col span="8">
+            <i-col span="6">
+              <Dropdown transfer>
+                <Avatar src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></Avatar>
+                <DropdownMenu slot="list" transfer>
+                  <DropdownItem>我的主页</DropdownItem>
+                  <DropdownItem>我的收藏</DropdownItem>
+                  <DropdownItem>设置<Badge status="error" /></DropdownItem>
+                  <DropdownItem divided><router-link to="/login">立即登录</router-link></DropdownItem>
+                  <DropdownItem><router-link to="/logout">退出登录</router-link></DropdownItem>
+                  <DropdownItem><router-link to="/regist">立即注册</router-link></DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </i-col>
+            <i-col span="6">
               <Dropdown>
                 <Badge :count="count" :offset="[20,4]">
                   <Icon type="md-notifications-outline" size="24" />
@@ -57,7 +65,7 @@
                 </DropdownMenu>
               </Dropdown>
             </i-col>
-            <i-col span="8">
+            <i-col span="6">
               <Icon type="md-color-palette" size="24" @click="openTheme = true" />
             </i-col>
           </Row>
@@ -105,6 +113,8 @@
     left: 0;
     width: 100%;
     height: 60px;
+    padding-right: 0;
+    padding-left: 0;
     background: #fff;
     z-index: 3;
   }

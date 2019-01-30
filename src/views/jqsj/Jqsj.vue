@@ -12,7 +12,7 @@
         </MenuItem>
         <MenuItem name="1-3">
           <Icon type="ios-search"></Icon>
-          <span>SKlearn</span>
+          <span>OpenCV</span>
         </MenuItem>
         <MenuItem name="1-4">
           <Icon type="ios-settings"></Icon>
@@ -20,26 +20,33 @@
         </MenuItem>
         <MenuItem name="1-5">
           <Icon type="ios-analytics-outline" />
-          <span>XGBOOST</span>
+          <span>SKImage</span>
         </MenuItem>
         <MenuItem name="1-6">
           <Icon type="ios-analytics-outline" />
-          <span>R语言</span>
+          <span>PyTorch</span>
+        </MenuItem>
+        <MenuItem name="1-7">
+          <Icon type="ios-analytics-outline" />
+          <span>TensorFlow</span>
         </MenuItem>
       </Menu>
     </template>
     <template slot="content">
       <Card class="algs-tree">
-        <h4>机器学习算法目录树</h4>
-        <Row :gutter="32">
-          <i-col span="8">
+        <h4>机器视觉算法目录树</h4>
+        <Row :gutter="16">
+          <i-col span="6">
             <Tree :data="treedata1"></Tree>
           </i-col>
-          <i-col span="8">
+          <i-col span="6">
             <Tree :data="treedata2"></Tree>
           </i-col>
-          <i-col span="8">
+          <i-col span="6">
             <Tree :data="treedata3"></Tree>
+          </i-col>
+          <i-col span="6">
+            <Tree :data="treedata4"></Tree>
           </i-col>
         </Row>
       </Card>
@@ -49,7 +56,7 @@
           <Card>
             <p slot="title">
               <Icon type="ios-film-outline"></Icon>
-              流形学习
+              物体检测
             </p>
             <a href="#" slot="extra">
               <Icon type="ios-loop-strong"></Icon>
@@ -74,11 +81,11 @@
           isCollapsed: false,
           treedata1: [
             {
-              title: '监督学习算法',
+              title: '物体检测算法',
               expand: true,
               children: [
                 {
-                  title: '广义线性模型',
+                  title: 'MaskRCNN',
                   expand: true,
                   children: [
                     {
@@ -90,7 +97,7 @@
                   ]
                 },
                 {
-                  title: '判别分析(LDA&QDA)',
+                  title: 'SSD',
                   expand: true,
                   children: [
                     {
@@ -106,11 +113,11 @@
           ],
           treedata2: [
             {
-              title: '无监督学习算法',
+              title: '目标跟踪算法',
               expand: true,
               children: [
                 {
-                  title: '维数约减',
+                  title: 'MeanShift',
                   expand: true,
                   children: [
                     {
@@ -122,7 +129,7 @@
                   ]
                 },
                 {
-                  title: '聚类分析',
+                  title: 'TLD算法',
                   expand: true,
                   children: [
                     {
@@ -134,7 +141,7 @@
                   ]
                 },
                 {
-                  title: '密度估计',
+                  title: 'DSST算法',
                   expand: true,
                   children: [
                     {
@@ -150,7 +157,7 @@
           ],
           treedata3: [
             {
-              title: '深度学习算法',
+              title: '图像分类算法',
               expand: true,
               children: [
                 {
@@ -188,13 +195,45 @@
                       title: 'DCGAN算法'
                     }
                   ]
-                },
+                }
+              ]
+            }
+          ],
+          treedata4: [
+            {
+              title: '相机模型与标定算法',
+              expand: true,
+              children: [
                 {
-                  title: '强化学习算法',
+                  title: 'CNN算法',
                   expand: true,
                   children: [
                     {
-                      title: 'D-Q-Learning算法'
+                      title: 'ResNet'
+                    },
+                    {
+                      title: 'DenseNet'
+                    }
+                  ]
+                },
+                {
+                  title: 'RNN算法',
+                  expand: true,
+                  children: [
+                    {
+                      title: 'LSTM算法'
+                    },
+                    {
+                      title: 'DBSCAN算法'
+                    }
+                  ]
+                },
+                {
+                  title: '生成式算法',
+                  expand: true,
+                  children: [
+                    {
+                      title: 'ACGAN算法'
                     },
                     {
                       title: 'DCGAN算法'
