@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header class="header">
-      <Row :gutter="2">
+      <Row>
         <i-col :xs="2" :sm ="2">
           <router-link to="/">
             <img src="../assets/logo.png" alt="人工智能社区" class="logo"/>

@@ -33,13 +33,13 @@
         <h4>机器学习算法目录树</h4>
         <Row :gutter="32">
           <i-col span="8">
-            <Tree :data="treedata1"></Tree>
+            <Tree :data="treedata1" @on-select-change="handleSelectChange"></Tree>
           </i-col>
           <i-col span="8">
-            <Tree :data="treedata2"></Tree>
+            <Tree :data="treedata2" @on-select-change="handleSelectChange"></Tree>
           </i-col>
           <i-col span="8">
-            <Tree :data="treedata3"></Tree>
+            <Tree :data="treedata3" @on-select-change="handleSelectChange"></Tree>
           </i-col>
         </Row>
       </Card>
@@ -214,6 +214,12 @@
         }
       },
       methods: {
+        handleSelectChange (item) {
+          if (item[0]) {
+            item[0].expand = !item[0].expand
+          }
+          item[0].selected = !item[0].selected
+        }
       }
     }
 </script>
