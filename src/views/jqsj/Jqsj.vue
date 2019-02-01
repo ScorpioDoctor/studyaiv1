@@ -82,11 +82,11 @@
           treedata1: [
             {
               title: '物体检测算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: 'MaskRCNN',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '普通最小二乘法'
@@ -98,7 +98,7 @@
                 },
                 {
                   title: 'SSD',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '线性判别分析(LDA)'
@@ -114,11 +114,11 @@
           treedata2: [
             {
               title: '目标跟踪算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: 'MeanShift',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'PCA方法'
@@ -130,7 +130,7 @@
                 },
                 {
                   title: 'TLD算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'K-均值算法'
@@ -142,7 +142,7 @@
                 },
                 {
                   title: 'DSST算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '核密度估计'
@@ -158,11 +158,11 @@
           treedata3: [
             {
               title: '图像分类算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: 'CNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ResNet'
@@ -174,7 +174,7 @@
                 },
                 {
                   title: 'RNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'LSTM算法'
@@ -186,7 +186,7 @@
                 },
                 {
                   title: '生成式算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ACGAN算法'
@@ -202,11 +202,11 @@
           treedata4: [
             {
               title: '相机模型与标定算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: 'CNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ResNet'
@@ -218,7 +218,7 @@
                 },
                 {
                   title: 'RNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'LSTM算法'
@@ -230,7 +230,7 @@
                 },
                 {
                   title: '生成式算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ACGAN算法'

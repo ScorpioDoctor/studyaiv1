@@ -75,11 +75,11 @@
           treedata1: [
             {
               title: '监督学习算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: '广义线性模型',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '普通最小二乘法'
@@ -91,7 +91,7 @@
                 },
                 {
                   title: '判别分析(LDA&QDA)',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '线性判别分析(LDA)'
@@ -107,11 +107,11 @@
           treedata2: [
             {
               title: '无监督学习算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: '维数约减',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'PCA方法'
@@ -123,7 +123,7 @@
                 },
                 {
                   title: '聚类分析',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'K-均值算法'
@@ -135,7 +135,7 @@
                 },
                 {
                   title: '密度估计',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: '核密度估计'
@@ -151,11 +151,11 @@
           treedata3: [
             {
               title: '深度学习算法',
-              expand: true,
+              expand: false,
               children: [
                 {
                   title: 'CNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ResNet'
@@ -167,7 +167,7 @@
                 },
                 {
                   title: 'RNN算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'LSTM算法'
@@ -179,7 +179,7 @@
                 },
                 {
                   title: '生成式算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'ACGAN算法'
@@ -191,7 +191,7 @@
                 },
                 {
                   title: '强化学习算法',
-                  expand: true,
+                  expand: false,
                   children: [
                     {
                       title: 'D-Q-Learning算法'
