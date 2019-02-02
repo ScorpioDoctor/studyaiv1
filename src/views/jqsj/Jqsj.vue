@@ -35,20 +35,7 @@
     <template slot="content">
       <Card class="algs-tree">
         <h4>机器视觉算法目录树</h4>
-        <Row :gutter="16">
-          <i-col span="6">
-            <Tree :data="treedata1" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-          <i-col span="6">
-            <Tree :data="treedata2" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-          <i-col span="6">
-            <Tree :data="treedata3" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-          <i-col span="6">
-            <Tree :data="treedata4" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-        </Row>
+        <custom-tree></custom-tree>
       </Card>
       <Divider>您选择的算法检索到的所有相关文章</Divider>
       <Row :gutter="32">
@@ -74,193 +61,26 @@
 </template>
 
 <script>
-    export default {
-      name: 'home',
-      data() {
-        return {
-          isCollapsed: false,
-          treedata1: [
-            {
-              title: '物体检测算法',
-              expand: false,
-              children: [
-                {
-                  title: 'MaskRCNN',
-                  expand: false,
-                  children: [
-                    {
-                      title: '普通最小二乘法'
-                    },
-                    {
-                      title: '岭回归'
-                    }
-                  ]
-                },
-                {
-                  title: 'SSD',
-                  expand: false,
-                  children: [
-                    {
-                      title: '线性判别分析(LDA)'
-                    },
-                    {
-                      title: '二次判别分析(QDA)'
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          treedata2: [
-            {
-              title: '目标跟踪算法',
-              expand: false,
-              children: [
-                {
-                  title: 'MeanShift',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'PCA方法'
-                    },
-                    {
-                      title: '单变量选择法'
-                    }
-                  ]
-                },
-                {
-                  title: 'TLD算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'K-均值算法'
-                    },
-                    {
-                      title: 'DBSCAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: 'DSST算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: '核密度估计'
-                    },
-                    {
-                      title: 'GMM算法'
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          treedata3: [
-            {
-              title: '图像分类算法',
-              expand: false,
-              children: [
-                {
-                  title: 'CNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ResNet'
-                    },
-                    {
-                      title: 'DenseNet'
-                    }
-                  ]
-                },
-                {
-                  title: 'RNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'LSTM算法'
-                    },
-                    {
-                      title: 'DBSCAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: '生成式算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ACGAN算法'
-                    },
-                    {
-                      title: 'DCGAN算法'
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          treedata4: [
-            {
-              title: '相机模型与标定算法',
-              expand: false,
-              children: [
-                {
-                  title: 'CNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ResNet'
-                    },
-                    {
-                      title: 'DenseNet'
-                    }
-                  ]
-                },
-                {
-                  title: 'RNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'LSTM算法'
-                    },
-                    {
-                      title: 'DBSCAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: '生成式算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ACGAN算法'
-                    },
-                    {
-                      title: 'DCGAN算法'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      },
-      computed: {
-        menuitemClasses: function () {
-          return [
-            'menu-item', this.isCollapsed ? 'collapsed-menu' : ''
-          ]
-        }
-      },
-      methods: {
-        handleSelectChange (item) {
-          if (item[0]) {
-            item[0].expand = !item[0].expand
-          }
-          item[0].selected = !item[0].selected
-        }
+  import CustomTree from './CustomTree'
+
+  export default {
+    name: 'home',
+    components: {CustomTree},
+    data() {
+      return {
+        isCollapsed: false,
       }
+    },
+    computed: {
+      menuitemClasses: function () {
+        return [
+          'menu-item', this.isCollapsed ? 'collapsed-menu' : ''
+        ]
+      }
+    },
+    methods: {
     }
+  }
 </script>
 
 <style scoped>

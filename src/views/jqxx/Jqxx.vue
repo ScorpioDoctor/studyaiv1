@@ -31,17 +31,7 @@
     <template slot="content">
       <Card class="algs-tree">
         <h4>机器学习算法目录树</h4>
-        <Row :gutter="32">
-          <i-col span="8">
-            <Tree :data="treedata1" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-          <i-col span="8">
-            <Tree :data="treedata2" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-          <i-col span="8">
-            <Tree :data="treedata3" @on-select-change="handleSelectChange"></Tree>
-          </i-col>
-        </Row>
+        <custom-tree></custom-tree>
       </Card>
       <Divider>您选择的算法检索到的所有相关文章</Divider>
       <Row :gutter="32">
@@ -67,143 +57,14 @@
 </template>
 
 <script>
+    import {getCategories} from "../../api/api";
+    import CustomTree from "./CustomTree"
     export default {
       name: 'home',
+      components: {CustomTree},
       data() {
         return {
           isCollapsed: false,
-          treedata1: [
-            {
-              title: '监督学习算法',
-              expand: false,
-              children: [
-                {
-                  title: '广义线性模型',
-                  expand: false,
-                  children: [
-                    {
-                      title: '普通最小二乘法'
-                    },
-                    {
-                      title: '岭回归'
-                    }
-                  ]
-                },
-                {
-                  title: '判别分析(LDA&QDA)',
-                  expand: false,
-                  children: [
-                    {
-                      title: '线性判别分析(LDA)'
-                    },
-                    {
-                      title: '二次判别分析(QDA)'
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          treedata2: [
-            {
-              title: '无监督学习算法',
-              expand: false,
-              children: [
-                {
-                  title: '维数约减',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'PCA方法'
-                    },
-                    {
-                      title: '单变量选择法'
-                    }
-                  ]
-                },
-                {
-                  title: '聚类分析',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'K-均值算法'
-                    },
-                    {
-                      title: 'DBSCAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: '密度估计',
-                  expand: false,
-                  children: [
-                    {
-                      title: '核密度估计'
-                    },
-                    {
-                      title: 'GMM算法'
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          treedata3: [
-            {
-              title: '深度学习算法',
-              expand: false,
-              children: [
-                {
-                  title: 'CNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ResNet'
-                    },
-                    {
-                      title: 'DenseNet'
-                    }
-                  ]
-                },
-                {
-                  title: 'RNN算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'LSTM算法'
-                    },
-                    {
-                      title: 'DBSCAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: '生成式算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'ACGAN算法'
-                    },
-                    {
-                      title: 'DCGAN算法'
-                    }
-                  ]
-                },
-                {
-                  title: '强化学习算法',
-                  expand: false,
-                  children: [
-                    {
-                      title: 'D-Q-Learning算法'
-                    },
-                    {
-                      title: 'DCGAN算法'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
         }
       },
       computed: {
@@ -214,12 +75,8 @@
         }
       },
       methods: {
-        handleSelectChange (item) {
-          if (item[0]) {
-            item[0].expand = !item[0].expand
-          }
-          item[0].selected = !item[0].selected
-        }
+      },
+      created () {
       }
     }
 </script>
