@@ -31,33 +31,28 @@
     <template slot="content">
       <Card class="algs-tree">
         <h4>机器学习算法目录树</h4>
-        <custom-tree></custom-tree>
+        <custom-tree @on-select="obtainArticles"></custom-tree>
       </Card>
-      <Divider>您选择的算法检索到的所有相关文章</Divider>
-      <Row :gutter="32">
-        <i-col :span="6" v-for="idx in 20" :key="idx" style="margin-bottom: 32px">
-          <Card>
-            <p slot="title">
-              <Icon type="ios-film-outline"></Icon>
-              流形学习
-            </p>
-            <a href="#" slot="extra">
-              <Icon type="ios-loop-strong"></Icon>
-              <Icon type="ios-star" v-for="n in idx%4" :key="n"></Icon>
-            </a>
-            <p>
-              深度学习的概念源于人工神经网络的研究。含多隐层的多层感知器就是一种深度学习结构。
-              深度学习通过组合低层特征形成更加抽象的高层表示属性类别或特征，以发现数据的分布式特征表示。
-            </p>
-          </Card>
-        </i-col>
-      </Row>
+      <Divider>您选择的算法检索到的所有相关文章共计： {{articleCount}} 篇</Divider>
+      <Card style="margin-bottom: 16px;" v-for="(item,idx) in articleList" :key="idx">
+        <p slot="title">
+          <Icon type="ios-film-outline"></Icon>
+          <router-link :to="'/blog/read/'+item.id">{{item.title}}</router-link>
+        </p>
+        <a href="#" slot="extra">
+          <Icon type="ios-loop-strong"></Icon>
+          <Icon type="ios-star" v-for="n in idx%4" :key="n"></Icon>
+        </a>
+        <p>
+          {{item.brief}}
+        </p>
+      </Card>
     </template>
   </main-container>
 </template>
 
 <script>
-    import {getCategories} from "../../api/api";
+    import {getCategories, getArticles} from "../../api/api";
     import CustomTree from "./CustomTree"
     export default {
       name: 'home',
@@ -65,6 +60,8 @@
       data() {
         return {
           isCollapsed: false,
+          articleCount:0,
+          articleList:[]
         }
       },
       computed: {
@@ -75,6 +72,17 @@
         }
       },
       methods: {
+        obtainArticles(params) {
+          getArticles({
+            'top_category':params.cat_id
+          }).then((response)=>{
+            this.articleCount = response.data.count
+            this.articleList = response.data.results
+            console.log(response.data.results)
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }
       },
       created () {
       }

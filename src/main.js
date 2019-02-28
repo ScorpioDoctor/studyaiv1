@@ -5,6 +5,7 @@ import store from './store'
 import './plugins/iview'
 import './plugins/mavoneditor'
 import './plugins/vuequilleditor'
+import './plugins/waterfull'
 
 import TopNav from './components/TopNav'
 import MainContainer from './components/MainContainer'

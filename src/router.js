@@ -29,6 +29,11 @@ export default new Router({
       component: () => import('./views/blogs/BlogCreate.vue')
     },
     {
+      path: '/blog/read/:id',
+      name: 'blogRead',
+      component: () => import('./views/blogs/BlogRead.vue')
+    },
+    {
       path: '/jqxx',
       name: 'jqxx',
       component: () => import('./views/jqxx/Jqxx.vue')
