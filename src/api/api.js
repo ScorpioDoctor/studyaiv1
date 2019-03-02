@@ -2,6 +2,15 @@ import axios from 'axios'
 
 let host = 'http://127.0.0.1:8000'
 
+// 登录
+export const login = params => { return axios.post(`${host}/login/`, params) }
+
+// 验证码
+export const getVeryCode = parmas => { return axios.post(`${host}/codes/`, parmas) }
+
+// 注册
+export const register = parmas => { return axios.post(`${host}/users/`, parmas) }
+
 // 获取分类类别信息
 export const getCategories = params => {
   if ('id' in params) {

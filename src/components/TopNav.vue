@@ -27,7 +27,7 @@
               <Dropdown>
                 <Button type="success">创作</Button>
                 <DropdownMenu slot="list">
-                  <DropdownItem><router-link to="/blog/create">写博客</router-link></DropdownItem>
+                  <router-link to="/blog/create"><DropdownItem>写博客</DropdownItem></router-link>
                   <DropdownItem>提问题</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
@@ -39,9 +39,9 @@
                   <DropdownItem>我的主页</DropdownItem>
                   <DropdownItem>我的收藏</DropdownItem>
                   <DropdownItem>设置<Badge status="error" /></DropdownItem>
-                  <DropdownItem divided><router-link to="/login">立即登录</router-link></DropdownItem>
-                  <DropdownItem><router-link to="/logout">退出登录</router-link></DropdownItem>
-                  <DropdownItem><router-link to="/regist">立即注册</router-link></DropdownItem>
+                  <router-link to="/login"><DropdownItem divided>立即登录</DropdownItem></router-link>
+                  <router-link to="/logout"><DropdownItem>退出登录</DropdownItem></router-link>
+                  <router-link to="/regist"><DropdownItem>立即注册</DropdownItem></router-link>
                 </DropdownMenu>
               </Dropdown>
             </i-col>
