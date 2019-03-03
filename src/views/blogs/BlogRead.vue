@@ -59,7 +59,6 @@
       },
       methods: {
         obtainArticle(){
-          console.log(this.$route.params)
           getArticleDetail(this.$route.params.id).then((response)=>{
             console.log(response.data)
             this.article = response.data

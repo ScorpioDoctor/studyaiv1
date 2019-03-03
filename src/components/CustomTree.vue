@@ -3,7 +3,6 @@
     <Tree :data="treeData"
           :load-data="loadData"
           :render="renderContent"
-          @on-select-change="handleSelectChange"
     ></Tree>
   </div>
 </template>
@@ -14,20 +13,17 @@
   export default {
     name: 'CustomTree',
     props: {
+      topCategoryName: String
     },
     data () {
       return {
-        topCategoryName: '机器学习',
         treeData: [],
       }
     },
     methods: {
 
-      handleSelectChange (item) {
-        if (item[0]) {
-          item[0].expand = !item[0].expand
-        }
-        item[0].selected = !item[0].selected
+      handleSelectChange (cat_id) {
+        this.$emit('on-select', {'cat_id':cat_id})
       },
 
       loadData (item, callback) {
@@ -80,7 +76,15 @@
                 marginRight: '8px'
               }
             }),
-            h('span', data.name)
+            h('Button', {
+              props: Object.assign({},  {
+                type: 'default',
+                size: 'small',
+              }),
+              on: {
+                click: ()=>{this.handleSelectChange(data.id)}
+              }
+            }, data.name)
           ])
         ]);
       },

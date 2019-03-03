@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        isCollapsed: true
+        isCollapsed: false
       }
     },
     computed: {

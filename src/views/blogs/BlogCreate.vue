@@ -26,22 +26,39 @@
             </Row>
           </i-col>
         </Row>
+        <Divider>请填写文章的其他信息</Divider>
         <Row>
           <i-col span="8">
             <div style="height: 1px;width: 100%"></div>
           </i-col>
           <i-col span="9">
-            <Row :gutter="64">
-              <i-col span="8">
-                <Button>微信登录</Button>
-              </i-col>
-              <i-col span="8">
-                <Button>QQ登录</Button>
-              </i-col>
-              <i-col span="8">
-                <Button>Github登录</Button>
-              </i-col>
-            </Row>
+            <Form ref="formValidate" :model="formValidate" :label-width="80">
+              <FormItem label="文章类别" prop="category">
+                <Cascader :data="categoryData" trigger="hover" transfer v-model="formValidate.category"
+                          required></Cascader>
+              </FormItem>
+              <FormItem label="文章标签" prop="tags">
+                <Select multiple v-model="formValidate.tags" placeholder="请选择若干标签" required>
+                  <Option v-for="(item,idx) in tagsData" :key="idx" :value="item.id">{{item.name}}</Option>
+                </Select>
+              </FormItem>
+              <FormItem label="文章标题" prop="title">
+                <Input type="text" v-model="formValidate.title" placeholder="请输入文章标题 " required/>
+              </FormItem>
+              <FormItem label="文章摘要" prop="brief">
+                <Input type="text" v-model="formValidate.brief" placeholder="请输入文章摘要" required/>
+              </FormItem>
+              <!--<FormItem label="文章封面" prop="frontimg">-->
+              <!--<input type="file" v-model="formValidate.frontimg" placeholder="请选择文章封面" required/>-->
+              <!--</FormItem>-->
+              <!--<FormItem label="Content" prop="content">-->
+              <!--<Input v-model="formValidate.content" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>-->
+              <!--</FormItem>-->
+              <FormItem>
+                <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+                <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+              </FormItem>
+            </Form>
           </i-col>
           <i-col span="7">
             <div style="height: 1px;width: 100%"></div>
@@ -53,48 +70,146 @@
 </template>
 
 <script>
-    export default {
-      name: 'home',
-      data() {
-        return {
-          isCollapsed: true,
-          editorType: 'richeditor',
-          editorContent: '',
-          editorOption: {
-            // some quill options
+  import {getCategories, getTags, postArticle} from "../../api/api";
+  import cookie from '../../store/cookie'
+
+  export default {
+    name: 'home',
+    data() {
+      return {
+        isCollapsed: true,
+        editorType: 'richeditor',
+        editorContent: '',
+        editorOption: {
+          // some quill options
+        },
+        formValidate: {
+          category: [],
+          tags: [],
+          title: '',
+          brief: '',
+          // frontimg: '',
+          content: '',
+        },
+        categoryData: [],
+        tagsData: []
+      }
+    },
+    methods: {
+      onEditorBlur(quill) {
+        console.log('editor blur!', quill)
+      },
+      onEditorFocus(quill) {
+        console.log('editor focus!', quill)
+      },
+      onEditorReady(quill) {
+        console.log('editor ready!', quill)
+      },
+      // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
+      onEditorChange({quill, html, text}) {
+        console.log('editor change!', quill, html, text)
+        this.editorContent = html
+      },
+
+      handleSubmit(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            postArticle({
+              category: this.formValidate.category[this.formValidate.category.length - 1],
+              tags: this.formValidate.tags,
+              title: this.formValidate.title,
+              brief: this.formValidate.brief,
+              // front_image: this.formValidate.frontimg,
+              content: this.editorContent
+            }).then((response) => {
+              this.$Message.success('Success!');
+              // console.log(response.data)
+              this.$router.push({ name: 'blogRead', params: {id: response.data.id} })
+            }).catch((error) => {
+              console.log(error)
+            })
+          } else {
+            this.$Message.error('Fail!');
           }
+        })
+      },
+      handleReset(name) {
+        this.$refs[name].resetFields();
+      },
+
+      getCategoriesTree(tree = []) {
+        let arr = [];
+        if (tree.length !== 0) {
+          tree.forEach(item => {
+            if (item.category_type === 1) {
+              let obj1 = {};
+              obj1.label = item.name;
+              obj1.value = item.id;
+              obj1.children = [];
+              item.sub_cat.forEach(item2 => {
+                if (item2.category_type === 2) {
+                  let obj2 = {};
+                  obj2.label = item2.name;
+                  obj2.value = item2.id;
+                  obj2.children = [];
+                  item2.sub_cat.forEach(item3 => {
+                    let obj3 = {};
+                    obj3.label = item3.name;
+                    obj3.value = item3.id;
+                    obj2.children.push(obj3)
+                  });
+                  obj1.children.push(obj2)
+                }
+              });
+              arr.push(obj1);
+            }
+          });
+        }
+        return arr
+      },
+      obtainCategories() {
+        console.log('执行 obtainCategories')
+        getCategories({
+          params: {}
+        }).then((res) => {
+          // 这里给节点赋值
+          this.categoryData = this.getCategoriesTree(res.data)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+
+      obtainTags() {
+        getTags({params: {}}).then((response) => {
+          this.tagsData = response.data
+          console.log(this.tagsData)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+
+    },
+    computed: {
+      quillEditor() {
+        if (this.editorType === 'richeditor') {
+          return this.$refs.myQuillEditor.quill
+        } else {
+          return null
         }
       },
-      methods: {
-        onEditorBlur(quill) {
-          console.log('editor blur!', quill)
-        },
-        onEditorFocus(quill) {
-          console.log('editor focus!', quill)
-        },
-        onEditorReady(quill) {
-          console.log('editor ready!', quill)
-        },
-        // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
-        onEditorChange({ quill, html, text }) {
-          console.log('editor change!', quill, html, text)
-          this.editorContent = html
-        }
-      },
-      computed: {
-        quillEditor () {
-          if(this.editorType === 'richeditor'){
-            return this.$refs.myQuillEditor.quill
-          }else{
-            return null
-          }
-        }
-      },
-      mounted () {
-        console.log('this is current quill instance object', this.quillEditor)
-        setTimeout(() => {
+    },
+    watch: {
+    },
+    created() {
+      this.obtainCategories()
+      this.obtainTags()
+    },
+    mounted() {
+      console.log('this is current quill instance object', this.quillEditor)
+      setTimeout(() => {
+        if (this.editorType === 'richeditor') {
           this.editorContent = `<h1 class="ql-align-center">
-                          <span class="ql-font-serif" style="background-color: rgb(240, 102, 102); color: rgb(255, 255, 255);"> I am Example 1! </span>
+                        <span class="ql-font-serif" style="background-color: rgb(240, 102, 102); color: rgb(255, 255, 255);"> I am Example 1! </span>
                         </h1>
                         <p><br></p>
                         <p><span class="ql-font-serif">W Can a man still be brave if he's afraid? That is the only time a man can be brave. </span></p>
@@ -121,9 +236,11 @@
                         <p><br></p>
                         <iframe height=480 width=640 src='http://player.youku.com/embed/XMzc5NTczMzcwNA==' class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" ></iframe>                        <p><br></p>
                         `
-        }, 1300)
-      }
+        } else {
+        }
+      }, 1300)
     }
+  }
 </script>
 
 <style scoped>

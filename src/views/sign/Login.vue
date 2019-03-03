@@ -67,77 +67,83 @@
 </template>
 
 <script>
-import { login } from '../../api/api'
-import cookie from '../../store/cookie'
+  import {login, getUserByName} from '../../api/api'
+  import cookie from '../../store/cookie'
 
-export default {
-  name: 'home',
-  data () {
-    return {
-      isCollapsed: true,
-      loginManner: 'phone',
-      formValidate: {
-        name: '',
-        mail: '',
-        phone: '',
-        passwd: ''
+  export default {
+    name: 'home',
+    data() {
+      return {
+        isCollapsed: true,
+        loginManner: 'phone',
+        formValidate: {
+          name: '',
+          mail: '',
+          phone: '',
+          passwd: ''
+        },
+        ruleValidate: {
+          name: [
+            {required: true, message: '姓名不能为空', trigger: 'blur'}
+          ],
+          mail: [
+            {required: true, message: '邮箱不能为空', trigger: 'blur'},
+            {type: 'email', message: '邮箱格式不正确', trigger: 'blur'}
+          ],
+          phone: [
+            {required: true, message: '手机号不能为空', trigger: 'change'}
+          ],
+          passwd: [
+            {required: true, message: '请输入密码', trigger: 'change'}
+          ]
+        }
+      }
+    },
+    computed: {},
+    methods: {
+      handleSubmit: function (name) {
+        this.$refs[name].validate((valid) => {
+          var loginInfo = this.formValidate.name
+          if (this.loginManner === 'email') {
+            loginInfo = this.formValidate.mail
+          }
+          if (this.loginManner === 'phone') {
+            loginInfo = this.formValidate.phone
+          }
+          if (valid) {
+            login({
+              username: loginInfo,
+              password: this.formValidate.passwd
+            }).then((response) => {
+              if (response.status === 200) {
+                this.$Message.success('登录成功!')
+                // 本地存储Token信息
+                cookie.setCookie('token', response.data.token, 7)
+                cookie.setCookie('username', loginInfo, 7)
+                // 获取当前登录用户的信息， 本地存储用户信息
+                getUserByName(loginInfo).then((res) => {
+                  cookie.setCookie('userid', res.data.id, 7)
+                  // 存储,更新 store
+                  this.$store.dispatch('setInfo')
+                  // 跳转到首页页面
+                  this.$router.push({name: 'home'})
+                }).catch(error => {
+                  console.log(error)
+                })
+              }
+            }).catch(function (error) {
+              console.log(error)
+            })
+          } else {
+            this.$Message.error('表单验证失败!')
+          }
+        })
       },
-      ruleValidate: {
-        name: [
-          { required: true, message: '姓名不能为空', trigger: 'blur' }
-        ],
-        mail: [
-          { required: true, message: '邮箱不能为空', trigger: 'blur' },
-          { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
-        ],
-        phone: [
-          { required: true, message: '手机号不能为空', trigger: 'change' }
-        ],
-        passwd: [
-          { required: true, message: '请输入密码', trigger: 'change' }
-        ]
+      handleReset(name) {
+        this.$refs[name].resetFields()
       }
     }
-  },
-  computed: {},
-  methods: {
-    handleSubmit: function (name) {
-      this.$refs[name].validate((valid) => {
-        var userName = this.formValidate.name
-        if (this.loginManner === 'email') {
-          userName = this.formValidate.mail
-        }
-        if (this.loginManner === 'phone') {
-          userName = this.formValidate.phone
-        }
-        if (valid) {
-          login({
-            username: userName,
-            password: this.formValidate.passwd
-          }).then((response) => {
-            if (response.status === 200) {
-              this.$Message.success('登录成功!')
-              // 本地存储用户信息
-              cookie.setCookie('name', this.formValidate.name, 7)
-              cookie.setCookie('token', response.data.token, 7)
-              // 存储,更新 store
-              this.$store.dispatch('setInfo')
-              // 跳转到首页页面
-              this.$router.push({ name: 'home' })
-            }
-          }).catch(function (error) {
-            console.log(error)
-          })
-        } else {
-          this.$Message.error('表单验证失败!')
-        }
-      })
-    },
-    handleReset (name) {
-      this.$refs[name].resetFields()
-    }
   }
-}
 </script>
 
 <style scoped>

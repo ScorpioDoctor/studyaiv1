@@ -35,40 +35,29 @@
     <template slot="content">
       <Card class="algs-tree">
         <h4>机器视觉算法目录树</h4>
-        <custom-tree></custom-tree>
+        <custom-tree top-category-name="机器视觉"
+                     @on-select="obtainArticles">
+        </custom-tree>
       </Card>
-      <Divider>您选择的算法检索到的所有相关文章</Divider>
-      <Row :gutter="32">
-        <i-col :span="6" v-for="idx in 20" :key="idx" style="margin-bottom: 32px">
-          <Card>
-            <p slot="title">
-              <Icon type="ios-film-outline"></Icon>
-              物体检测
-            </p>
-            <a href="#" slot="extra">
-              <Icon type="ios-loop-strong"></Icon>
-              <Icon type="ios-star" v-for="n in idx%4" :key="n"></Icon>
-            </a>
-            <p>
-              深度学习的概念源于人工神经网络的研究。含多隐层的多层感知器就是一种深度学习结构。
-              深度学习通过组合低层特征形成更加抽象的高层表示属性类别或特征，以发现数据的分布式特征表示。
-            </p>
-          </Card>
-        </i-col>
-      </Row>
+      <Divider>您选择的算法检索到的所有相关文章共计： {{articlesCount}} 篇</Divider>
+      <article-list :articles="articlesList"></article-list>
     </template>
   </main-container>
 </template>
 
 <script>
-  import CustomTree from './CustomTree'
+  import {getArticles} from "../../api/api"
+  import CustomTree from '../../components/CustomTree'
+  import ArticleList from '../../components/ArticleList'
 
   export default {
     name: 'home',
-    components: {CustomTree},
+    components: {CustomTree, ArticleList},
     data() {
       return {
-        isCollapsed: false,
+        isCollapsed: true,
+        articlesCount:0,
+        articlesList:[]
       }
     },
     computed: {
@@ -79,6 +68,17 @@
       }
     },
     methods: {
+      obtainArticles(params) {
+        getArticles({
+          'top_category':params.cat_id
+        }).then((response)=>{
+          this.articlesCount = response.data.count
+          this.articlesList = response.data.results
+          console.log(response.data.results)
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
     }
   }
 </script>

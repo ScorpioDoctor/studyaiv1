@@ -9,16 +9,16 @@
           <i-col span="10">
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
               <FormItem label="用户名" prop="name" >
-                <Input v-model="formValidate.name" placeholder="请输入你的用户名" />
+                <Input type="text" v-model="formValidate.name" placeholder="请输入你的用户名" />
               </FormItem>
               <p v-show="error.username">{{error.username}}</p>
               <FormItem label="邮箱" prop="mail">
-                <Input v-model="formValidate.mail" placeholder="请输入你的邮箱" />
+                <Input type="email" v-model="formValidate.mail" placeholder="请输入你的邮箱" />
               </FormItem>
               <FormItem label="手机号" prop="phone">
                 <Row>
                   <i-col :span="15">
-                    <Input v-model="formValidate.phone" placeholder="请输入你的手机号" required />
+                    <Input type="text" v-model="formValidate.phone" placeholder="请输入你的手机号" required />
                   </i-col>
                   <i-col span="1" style="text-align: center">--</i-col>
                   <i-col :span="8">
@@ -28,7 +28,7 @@
               </FormItem>
               <p v-show="error.mobile">{{error.mobile}}</p>
               <FormItem label="验证码" prop="code" >
-                <Input v-model="formValidate.code" placeholder="请输入你收到的验证码" required />
+                <Input type="text" v-model="formValidate.code" placeholder="请输入你收到的验证码" required />
               </FormItem>
               <p v-show="error.code">{{error.code}}</p>
               <FormItem label="密码" prop="passwd">
@@ -109,7 +109,7 @@ export default {
         phone: '',
         code: '',
         passwd: '',
-        passwdCheck: []
+        passwdCheck: ''
       },
       ruleValidate: {
         name: [
@@ -172,7 +172,8 @@ export default {
           }).then((response) => {
             this.$Message.success('注册成功!')
             console.log(response)
-            cookie.setCookie('name', response.data.username, 7)
+            cookie.setCookie('username', response.data.username, 7)
+            cookie.setCookie('userid', response.data.userid, 7)
             cookie.setCookie('token', response.data.token, 7)
             // 存储在store
             // 更新store数据

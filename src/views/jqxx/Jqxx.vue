@@ -12,7 +12,7 @@
         </MenuItem>
         <MenuItem name="1-3">
           <Icon type="ios-search"></Icon>
-          <span>SKlearn</span>
+          <span>OpenCV</span>
         </MenuItem>
         <MenuItem name="1-4">
           <Icon type="ios-settings"></Icon>
@@ -20,73 +20,66 @@
         </MenuItem>
         <MenuItem name="1-5">
           <Icon type="ios-analytics-outline" />
-          <span>XGBOOST</span>
+          <span>SKImage</span>
         </MenuItem>
         <MenuItem name="1-6">
           <Icon type="ios-analytics-outline" />
-          <span>R语言</span>
+          <span>PyTorch</span>
+        </MenuItem>
+        <MenuItem name="1-7">
+          <Icon type="ios-analytics-outline" />
+          <span>TensorFlow</span>
         </MenuItem>
       </Menu>
     </template>
     <template slot="content">
       <Card class="algs-tree">
         <h4>机器学习算法目录树</h4>
-        <custom-tree @on-select="obtainArticles"></custom-tree>
+        <custom-tree top-category-name="机器学习"
+                     @on-select="obtainArticles">
+        </custom-tree>
       </Card>
-      <Divider>您选择的算法检索到的所有相关文章共计： {{articleCount}} 篇</Divider>
-      <Card style="margin-bottom: 16px;" v-for="(item,idx) in articleList" :key="idx">
-        <p slot="title">
-          <Icon type="ios-film-outline"></Icon>
-          <router-link :to="'/blog/read/'+item.id">{{item.title}}</router-link>
-        </p>
-        <a href="#" slot="extra">
-          <Icon type="ios-loop-strong"></Icon>
-          <Icon type="ios-star" v-for="n in idx%4" :key="n"></Icon>
-        </a>
-        <p>
-          {{item.brief}}
-        </p>
-      </Card>
+      <Divider>您选择的算法检索到的所有相关文章共计： {{articlesCount}} 篇</Divider>
+      <article-list :articles="articlesList"></article-list>
     </template>
   </main-container>
 </template>
 
 <script>
-    import {getCategories, getArticles} from "../../api/api";
-    import CustomTree from "./CustomTree"
-    export default {
-      name: 'home',
-      components: {CustomTree},
-      data() {
-        return {
-          isCollapsed: false,
-          articleCount:0,
-          articleList:[]
-        }
-      },
-      computed: {
-        menuitemClasses: function () {
-          return [
-            'menu-item', this.isCollapsed ? 'collapsed-menu' : ''
-          ]
-        }
-      },
-      methods: {
-        obtainArticles(params) {
-          getArticles({
-            'top_category':params.cat_id
-          }).then((response)=>{
-            this.articleCount = response.data.count
-            this.articleList = response.data.results
-            console.log(response.data.results)
-          }).catch(function (error) {
-            console.log(error)
-          })
-        }
-      },
-      created () {
+  import {getArticles} from "../../api/api"
+  import CustomTree from '../../components/CustomTree'
+  import ArticleList from '../../components/ArticleList'
+
+  export default {
+    name: 'home',
+    components: {CustomTree, ArticleList},
+    data() {
+      return {
+        isCollapsed: true,
+        articlesCount:0,
+        articlesList:[]
+      }
+    },
+    computed: {
+      menuitemClasses: function () {
+        return [
+          'menu-item', this.isCollapsed ? 'collapsed-menu' : ''
+        ]
+      }
+    },
+    methods: {
+      obtainArticles(params) {
+        getArticles({
+          'top_category':params.cat_id
+        }).then((response)=>{
+          this.articlesCount = response.data.count
+          this.articlesList = response.data.results
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
     }
+  }
 </script>
 
 <style scoped>
